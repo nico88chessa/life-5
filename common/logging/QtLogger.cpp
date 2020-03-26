@@ -1,8 +1,10 @@
 #include "QtLogger.hpp"
 #include <QDateTime>
 
+
 using namespace DVN;
 
+static constexpr char FILE_DATETIME_FORMAT[] = "yyyyMMdd-hhmmss";
 static constexpr char TIME_FORMAT[] = "yyyy-MM-dd hh:mm:ss.zzz";
 
 namespace DVN {
@@ -15,12 +17,12 @@ void messageHandlerFunction(QtMsgType type, const QMessageLogContext& context, c
 
 QtLogger::QtLogger() {
 
-    rotateLog();
+    deleteLastLogIfNeeded();
 
     auto prefixPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).at(0);
-
     auto logPath = prefixPath + "/" + LOG_PATH + "/";
-    auto filePath = QString(logPath+PROJECT_NAME+"-%1.log").arg(0);
+    QString currentDateTime = QDateTime::currentDateTime().toString(FILE_DATETIME_FORMAT);
+    auto filePath = QString(logPath+PROJECT_NAME+"-%1.log").arg(currentDateTime);
 
     QDir dir(prefixPath);
     if (!dir.mkpath(logPath))
@@ -46,23 +48,23 @@ void QtLogger::messageHandler(QtMsgType type, MAYBE_UNUSED const QMessageLogCont
     // fprintf(stderr, "%s DEBUG: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
     switch (type) {
     case QtDebugMsg:
-        file << qPrintable(QString("%0 DEBUG %1\n").arg(localTime.constData()).arg(localMsg.constData()));
+        file << qPrintable(QString("%0 [DEBUG] %1\n").arg(localTime.constData()).arg(localMsg.constData()));
         file.flush();
         break;
     case QtInfoMsg:
-        file << qPrintable(QString("%0 INFO %1\n").arg(localTime.constData()).arg(localMsg.constData()));
+        file << qPrintable(QString("%0 [INFO] %1\n").arg(localTime.constData()).arg(localMsg.constData()));
         file.flush();
         break;
     case QtWarningMsg:
-        file << qPrintable(QString("%0 WARN %1\n").arg(localTime.constData()).arg(localMsg.constData()));
+        file << qPrintable(QString("%0 [WARN] %1\n").arg(localTime.constData()).arg(localMsg.constData()));
         file.flush();
         break;
     case QtCriticalMsg:
-        file << qPrintable(QString("%0 CRITICAL %1\n").arg(localTime.constData()).arg(localMsg.constData()));
+        file << qPrintable(QString("%0 [CRITICAL] %1\n").arg(localTime.constData()).arg(localMsg.constData()));
         file.flush();
         break;
     case QtFatalMsg:
-        file << qPrintable(QString("%0 FATAL %1\n").arg(localTime.constData()).arg(localMsg.constData()));
+        file << qPrintable(QString("%0 [FATAL] %1\n").arg(localTime.constData()).arg(localMsg.constData()));
         file.flush();
         break;
     }
@@ -85,6 +87,21 @@ void QtLogger::rotateLog() {
             QFile::rename(QString(logPath + PROJECT_NAME + "-%1.log").arg(i-1),
                           QString(logPath + PROJECT_NAME + "-%1.log").arg(i));
 
+    }
+
+}
+
+void QtLogger::deleteLastLogIfNeeded() {
+
+    auto prefixPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).at(0);
+    auto logPath = prefixPath + "/" + LOG_PATH +"/";
+
+    QDir dir(logPath);
+    auto&& dirPath = dir.entryList(QStringList(QString("%0*.log").arg(PROJECT_NAME)), QDir::NoFilter, QDir::Time);
+
+    if (dirPath.size() >= MAX_NUM_LOG_FILES) {
+        QString fileToDelete = logPath+"/./"+dirPath.last();
+        QFile::remove(fileToDelete);
     }
 
 }

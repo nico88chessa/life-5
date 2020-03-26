@@ -12,6 +12,7 @@
 #include "configure.h"
 #include "fstream"
 
+
 namespace DVN {
 
 class QtLogger {
@@ -30,6 +31,7 @@ private:
                         const QMessageLogContext &context,
                         const QString &msg);
     void rotateLog();
+    void deleteLastLogIfNeeded();
 
 
 public:

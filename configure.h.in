@@ -4,9 +4,20 @@
 #define DVN dv_@PROGRAM_NAMESPACE@
 
 #ifdef _MSC_VER
+#if __cplusplus < 201703L
 #define MAYBE_UNUSED
 #else
+#define MAYBE_UNUSED [[maybe_unused]]
+#endif
+
+#else
+
+#if __cplusplus < 201703L
 #define MAYBE_UNUSED __attribute__((unused))
+#else
+#define MAYBE_UNUSED [[maybe_unused]]
+#endif
+
 #endif
 
 namespace DVN {

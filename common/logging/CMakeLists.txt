@@ -1,5 +1,7 @@
 SET(ITEMS
     QtLogger
+    BoostLogger
+    Logger
     )
 
 FOREACH(ITEM ${ITEMS})
