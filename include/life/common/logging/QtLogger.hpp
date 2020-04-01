@@ -2,18 +2,13 @@
 #define QTLOGGER_HPP
 
 #include <QDebug>
-#include <QString>
-#include <QMessageLogger>
-#include <QFile>
-#include <QStandardPaths>
-#include <QtGlobal>
-#include <QDir>
 
-#include "configure.h"
-#include "fstream"
+#include <fstream>
+
+#include <configure.h>
 
 
-namespace DVN {
+DV_LIFE_OPEN_NAMESPACE
 
 class QtLogger {
 
@@ -68,6 +63,6 @@ public:
 #define traceErr QtLogger::instance().error
 #define traceFatal QtLogger::instance().fatal
 
-}
+DV_LIFE_CLOSE_NAMESPACE
 
 #endif // LOGGER_HPP

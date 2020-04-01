@@ -17,7 +17,7 @@
 #include <locale>
 
 
-using namespace DVN;
+using namespace dvlife;
 
 namespace logging = boost::log;
 namespace sinks = boost::log::sinks;
@@ -137,7 +137,7 @@ void BoostLogger::formatter(const BoostLogger::recordView& rec, BoostLogger::ost
 
 void BoostLogger::enter(const char* functionName) {
 //    BOOST_LOG(lg) << logging::add_value("Severity", SEVERITY::DEBUG) << "ENTER" << functionName;
-    BOOST_LOG(lg) << QString("Prova");
+//    BOOST_LOG(lg) << QString("Prova");
     BOOST_LOG_SEV(lg, SEVERITY::DEBUG) << "ENTER " << functionName;
 }
 

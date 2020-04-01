@@ -151,6 +151,7 @@ FIND_PACKAGE(Qt5 COMPONENTS
     Qml
     Gui
     Network
+    Test
     REQUIRED
     )
 
@@ -186,11 +187,20 @@ MESSAGE("Qt5Network_COMPILE_DEFINITIONS: ${Qt5Network_COMPILE_DEFINITIONS}")
 MESSAGE("Qt5Network_FOUND: ${Qt5Network_FOUND}")
 MESSAGE("Qt5Network_EXECUTABLE_COMPILE_FLAGS: ${Qt5Network_EXECUTABLE_COMPILE_FLAGS}")
 
+MESSAGE("Qt5Test_VERSION: ${Qt5Test_VERSION}")
+MESSAGE("Qt5Test_LIBRARIES: ${Qt5Test_LIBRARIES}")
+MESSAGE("Qt5Test_INCLUDE_DIRS: ${Qt5Test_INCLUDE_DIRS}")
+MESSAGE("Qt5Test_DEFINITIONS: ${Qt5Test_DEFINITIONS}")
+MESSAGE("Qt5Test_COMPILE_DEFINITIONS: ${Qt5Test_COMPILE_DEFINITIONS}")
+MESSAGE("Qt5Test_FOUND: ${Qt5Test_FOUND}")
+MESSAGE("Qt5Test_EXECUTABLE_COMPILE_FLAGS: ${Qt5Test_EXECUTABLE_COMPILE_FLAGS}")
+
 INCLUDE_DIRECTORIES(
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Qml_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Network_INCLUDE_DIRS}
+    ${Qt5Test_INCLUDE_DIRS}
     )
 
 SET(QT_LIBRARIES
@@ -198,12 +208,12 @@ SET(QT_LIBRARIES
     ${Qt5Qml_LIBRARIES}
     ${Qt5Gui_LIBRARIES}
     ${Qt5Network_LIBRARIES}
+    ${Qt5Test_LIBRARIES}
     )
 
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTOUIC ON)
 SET(CMAKE_AUTORCC ON)
-
 
 
 # configurazione boost
@@ -260,17 +270,16 @@ SET(UPDATE_TS CACHE BOOL "") # questo lo setto qui cosi poi lo posso modificare 
 SET(PROJECT_QSS_PATH "" CACHE INTERNAL "path of qss files") # questo serve per sviluppare il CSS a runtime senza usare il file .qrc (binario)
 
 SET(SUBFOLDERS
-    core
-    data
-    common
-    devices
-    gui
+    include
     )
 
 FOREACH(FOLDER ${SUBFOLDERS})
     SET(PROJECT_FOLDERS ${PROJECT_FOLDERS} "${PROJECT_SOURCE_DIR}/${FOLDER}")
 ENDFOREACH()
 
+# Qui sotto disabilito INCLUDE_DIRECTORIES per le sottocartelle; in questo modo
+# obbligo il codice ad avere gli include iniziando con il pattern <life/..>;
+# la cartella life viene inclusa attraverso la direttiva CMAKE_INCLUDE_CURRENT_DIR
 FOREACH(FOLDER ${PROJECT_FOLDERS})
     INCLUDE_DIRECTORIES(${FOLDER})
     ADD_SUBDIRECTORY(${FOLDER})

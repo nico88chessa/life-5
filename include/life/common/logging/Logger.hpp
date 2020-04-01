@@ -2,11 +2,11 @@
 #define LOGGER_HPP
 
 #ifdef FLAG_LOG_BOOST
-#include <logging/BoostLogger.hpp>
+#include <life/common/logging/BoostLogger.hpp>
 #endif
 
 #ifdef FLAG_LOG_QT
-#include <logging/QtLogger.hpp>
+#include <life/common/logging/QtLogger.hpp>
 
 #endif
 

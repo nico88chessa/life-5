@@ -1,7 +1,7 @@
 #ifndef BOOSTLOGGER_H
 #define BOOSTLOGGER_H
 
-#include "configure.h"
+#include <configure.h>
 
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/sources/severity_feature.hpp>
@@ -17,7 +17,8 @@ class QString;
 template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(std::basic_ostream<CharT, TraitsT>& strm, const QString& qs);
 
-namespace DVN {
+
+DV_LIFE_OPEN_NAMESPACE
 
 enum class SEVERITY : int {
     DEBUG,
@@ -69,6 +70,6 @@ private:
 #define traceErr() trace(SEVERITY::ERROR)
 #define traceFatal BoostLogger::instance().fatal
 
-}
+DV_LIFE_CLOSE_NAMESPACE
 
 #endif // BOOSTLOGGER_H

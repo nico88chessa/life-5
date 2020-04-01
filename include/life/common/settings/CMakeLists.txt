@@ -1,4 +1,7 @@
 SET(ITEMS
+    MachineParameter
+    SettingsManager
+    SettingsManagerExceptions
     )
 
 FOREACH(ITEM ${ITEMS})
@@ -50,9 +53,10 @@ MESSAGE("TS_FILES: ${PROJECT_TS_FILES}")
 MESSAGE("QM_FILES: ${PROJECT_QM_FILES}")
 
 SET(SUB_FOLDERS
+    descriptors
 )
 
 FOREACH(FOLDER ${SUB_FOLDERS})
-    INCLUDE_DIRECTORIES(${FOLDER})
+#    INCLUDE_DIRECTORIES(${FOLDER})
     ADD_SUBDIRECTORY(${FOLDER})
 ENDFOREACH()

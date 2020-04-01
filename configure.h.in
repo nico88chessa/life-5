@@ -1,7 +1,13 @@
 #ifndef CONFIGURE_H
 #define CONFIGURE_H
 
-#define DVN dv_@PROGRAM_NAMESPACE@
+#ifndef DV_LIFE_OPEN_NAMESPACE
+#define DV_LIFE_OPEN_NAMESPACE namespace dv { namespace @PROGRAM_NAMESPACE@ {
+#endif
+
+#ifndef DV_LIFE_CLOSE_NAMESPACE
+#define DV_LIFE_CLOSE_NAMESPACE } }
+#endif
 
 #ifdef _MSC_VER
 #if __cplusplus < 201703L
@@ -20,17 +26,19 @@
 
 #endif
 
-namespace DVN {
+DV_LIFE_OPEN_NAMESPACE
 
-    static constexpr char PROJECT_NAME[] = "@PROJECT_NAME@";
-    static constexpr char PROJECT_VERSION[] = "@PROJECT_VERSION@";
-    static constexpr char PROJECT_UI_NAME[] = "@PROJECT_UI_NAME@";
-    static constexpr char ORGANIZATION[] = "@ORGANIZATION@";
+static constexpr char PROJECT_NAME[] = "@PROJECT_NAME@";
+static constexpr char PROJECT_VERSION[] = "@PROJECT_VERSION@";
+static constexpr char PROJECT_UI_NAME[] = "@PROJECT_UI_NAME@";
+static constexpr char ORGANIZATION[] = "@ORGANIZATION@";
 
-    static constexpr char LOG_PATH[] = "@LOG_PATH@";
+static constexpr char LOG_PATH[] = "@LOG_PATH@";
 
-    static constexpr int MAX_NUM_LOG_FILES = 5;
+static constexpr int MAX_NUM_LOG_FILES = 5;
 
-}
+DV_LIFE_CLOSE_NAMESPACE
+
+namespace dvlife = dv::@PROGRAM_NAMESPACE@;
 
 #endif

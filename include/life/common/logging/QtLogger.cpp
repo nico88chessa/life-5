@@ -1,19 +1,26 @@
 #include "QtLogger.hpp"
+
 #include <QDateTime>
+#include <QDir>
+#include <QStandardPaths>
+#include <QFile>
+#include <QtGlobal>
 
 
-using namespace DVN;
+using namespace dvlife;
 
 static constexpr char FILE_DATETIME_FORMAT[] = "yyyyMMdd-hhmmss";
 static constexpr char TIME_FORMAT[] = "yyyy-MM-dd hh:mm:ss.zzz";
 
-namespace DVN {
+
+DV_LIFE_OPEN_NAMESPACE
 
 void messageHandlerFunction(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
     QtLogger::instance().messageHandler(type, context, msg);
 }
 
-}
+DV_LIFE_CLOSE_NAMESPACE
+
 
 QtLogger::QtLogger() {
 
