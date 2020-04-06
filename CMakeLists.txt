@@ -326,3 +326,30 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME}-${PROJECT_VERSION}
 #INSTALL(TARGETS ${PROJECT_NAME}-${PROJECT_VERSION}
 #        CONFIGURATIONS Debug
 #        RUNTIME DESTINATION Debug/bin)
+
+
+################### TESTS ####################################
+
+ENABLE_TESTING()
+
+SET(TESTS
+    Test1
+    SettingsTest
+    )
+
+FOREACH(TestName ${TESTS})
+
+    ADD_EXECUTABLE(${TestName}
+        tests/${TestName}.cpp
+        ${PROJECT_SOURCES}
+        ${PROJECT_HEADERS}
+        )
+    ADD_TEST(NAME ${TestName} COMMAND ${TestName})
+
+    TARGET_LINK_LIBRARIES(${TestName}
+        PRIVATE Qt5::Test
+        ${QT_LIBRARIES}
+        ${BOOST_LIBRARIES}
+        )
+
+ENDFOREACH()
