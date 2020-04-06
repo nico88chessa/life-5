@@ -55,6 +55,17 @@ public:
 
 };
 
+class DisableMandatoryGroupException : public std::exception {
+public:
+    DisableMandatoryGroupException() { }
+
+    virtual const char* what() const noexcept {
+        std::string temp = "Un gruppo obbligatorio non puo' essere disabilitato";
+        return temp.c_str();
+    }
+
+};
+
 }
 
 DV_LIFE_CLOSE_NAMESPACE

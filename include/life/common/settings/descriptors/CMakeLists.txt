@@ -1,5 +1,4 @@
 SET(ITEMS
-    SettingDescriptor
     AxisXDescriptor
     AxisZDescriptor
     Decriptors

@@ -5,8 +5,6 @@
 
 #include <QString>
 
-#include <life/common/Types.hpp>
-
 
 DV_LIFE_OPEN_NAMESPACE
 
@@ -24,8 +22,13 @@ public:
  * specializzo le classi nel .cpp
  */
 template <typename T>
-static QLatin1String getEnumName(MAYBE_UNUSED T e) noexcept {
-    return QLatin1String("");
+static QString enumToName(MAYBE_UNUSED T e) noexcept {
+    return "";
+}
+
+template <typename T>
+static T nameToEnum(MAYBE_UNUSED QLatin1String str) noexcept {
+    return T();
 }
 
 };

@@ -2,6 +2,7 @@ SET(ITEMS
     MachineParameter
     SettingsManager
     SettingsManagerExceptions
+    SettingDescriptor
     )
 
 FOREACH(ITEM ${ITEMS})

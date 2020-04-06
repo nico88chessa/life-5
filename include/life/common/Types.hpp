@@ -3,20 +3,17 @@
 
 #include <configure.h>
 
+#include <type_traits>
+
 #include <QMetaType>
 
 
 DV_LIFE_OPEN_NAMESPACE
 
-enum class DeviceKey : int {
-    NONE = -1,
-};
+static constexpr int ENUM_INVALID = -1;
 
-enum class SettingsGroup : int {
-    GUI = 0,
-    AXIS_X,
-    AXIS_Z,
-    CYLINDER
+enum class DeviceKey : int {
+    NONE = ENUM_INVALID,
 };
 
 /**
@@ -27,6 +24,7 @@ enum class SettingsGroup : int {
  * NO_LINEAR: motore non lineare
  */
 enum class MotorXKind : int {
+    NONE = ENUM_INVALID,
     LINEAR,
     NO_LINEAR
 };
@@ -42,35 +40,41 @@ enum class MotorXKind : int {
  * uscire dal sigaro
  */
 enum class AxisXFeedback : int {
+    NONE = ENUM_INVALID,
     LINEAR_ENCODER,
     MOTOR_RESOLVER
 };
 
 
-DV_LIFE_CLOSE_NAMESPACE
+enum class SettingsGroupType : int {
+    NONE = ENUM_INVALID,
+    GUI,
+    AXIS_X,
+    AXIS_Z,
+    CYLINDER,
+    PROVA
+};
 
 
 /**
   * definisco le variabili gestibili da qt
   */
 
-DV_LIFE_OPEN_NAMESPACE
-
 Q_NAMESPACE
 
+Q_ENUM_NS(DeviceKey)
+Q_ENUM_NS(MotorXKind)
+Q_ENUM_NS(AxisXFeedback)
+
+template <typename T>
+static constexpr bool isQEnumSerializable() {
+
+    return std::is_same_v<T, DeviceKey> ||
+            std::is_same_v<T, MotorXKind> ||
+            std::is_same_v<T, AxisXFeedback>;
+
+}
+
 DV_LIFE_CLOSE_NAMESPACE
-
-
-/* WARNING NIC 31/03/2020
- * lo inserisco qui, in modo da separare gli enum
- * dalle direttive per Qt
- * la dichiarazione degli enums presenti nel file .ipp
- * funziona perche' e' definito qui sopra la direttiva
- * Q_NAMESPACE
- * in qualche modo, grazie a questa riga il moc fa il parse
- * anche di questo file; se non ci fosse ci sarebbero problemi
- */
-#include "TypesQDecl.ipp"
-
 
 #endif // TYPES_HPP

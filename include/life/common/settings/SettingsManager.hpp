@@ -20,24 +20,37 @@ DV_LIFE_OPEN_NAMESPACE
 
 namespace detail {
 
-    class Group {
-    public:
-        using Ptr = Group*;
-        using ConstPtr = const Group*;
+class Group {
+public:
+    using Ptr = Group*;
+    using ConstPtr = const Group*;
 
-    private:
-        bool isEnabled;
-        QMap<QString, QVariant> params;
+private:
+    QString name;
+    bool mandatory;
+    bool enabled;
+    QMap<QString, QVariant> params;
 
-    public:
-        Group() : isEnabled(false), params() { }
+public:
+    Group() : Group("", false, false) { }
+    Group(QString name) : Group(name, false) { }
+    Group(QString name, bool isMandatory) : Group(name, isMandatory, isMandatory==true) { }
+    Group(QString name, bool isMandatory, bool isEnabled) :
+        name(name),
+        mandatory(isMandatory),
+        enabled(isEnabled), params() { }
 
-        bool getIsEnabled() const { return isEnabled; }
-        void setIsEnabled(bool value) { isEnabled = value; }
-        QMap<QString, QVariant>& getParams() { return params; }
-        const QMap<QString, QVariant>& getParams() const { return params; }
-
-    };
+    inline QStringView getName() const { return name; }
+    inline bool isMandatory() const { return mandatory; }
+    inline bool isEnabled() const { return enabled; }
+    inline void setEnabled(bool value) noexcept(false) {
+        if (isMandatory() && !value)
+            throw dvlife::exceptions::DisableMandatoryGroupException();
+        enabled = value;
+    }
+    QMap<QString, QVariant>& getParams() { return params; }
+    const QMap<QString, QVariant>& getParams() const { return params; }
+};
 
 }
 
@@ -45,13 +58,14 @@ DV_LIFE_CLOSE_NAMESPACE
 
 Q_DECLARE_METATYPE(dvlife::detail::Group)
 
-
 DV_LIFE_OPEN_NAMESPACE
+
+class SettingDescriptor;
 
 class SettingsManager {
 
 private:
-    QMap<SettingsGroup, detail::Group> groups;
+    QMap<SettingsGroupType, detail::Group> groups;
 
 public:
     static SettingsManager& instance();
@@ -64,7 +78,9 @@ private:
     SettingsManager(SettingsManager&& other) = delete;
     SettingsManager& operator=(const SettingsManager&) = delete;
 
-    void addParameter(const std::initializer_list<MachineParameter>& list);
+    void addGroupFromDescriptor(const dv::life::SettingDescriptor& settingDescriptor) noexcept;
+    void addMachineParameters(const std::initializer_list<MachineParameter>& list) noexcept;
+
 
 public:
 
@@ -80,13 +96,13 @@ public:
     }
 
     template <typename T>
-    T getParameter(SettingsGroup groupId, const QLatin1String& paramKey) const noexcept(false) {
+    T getParameter(SettingsGroupType groupId, const QLatin1String& paramKey) const noexcept(false) {
 
         traceEnter;
 
         if (!groups.contains(groupId)) {
             traceErr() << "Gruppo non trovato nel set di parametri";
-            throw dvlife::exceptions::SettingsManagerGroupParameterNotFoundException(utils::EnumUtils::getEnumName(groupId).data());
+            throw dvlife::exceptions::SettingsManagerGroupParameterNotFoundException(utils::EnumUtils::enumToName(groupId).toStdString());
         }
 
         const detail::Group& selectedGroup = groups[groupId];
@@ -94,8 +110,8 @@ public:
         if (!selectedGroup.getParams().contains(paramKey)) {
             traceErr() << "Parametro non trovato all'interno del gruppo";
             throw dvlife::exceptions::SettingsManagerParameterNotFoundException(
-                        utils::EnumUtils::getEnumName(groupId).data(),
-                        utils::EnumUtils::getEnumName(groupId).data());
+                        utils::EnumUtils::enumToName(groupId).toStdString(),
+                        utils::EnumUtils::enumToName(groupId).toStdString());
         }
 
         const QVariant& pValue = selectedGroup.getParams()[paramKey];
@@ -111,7 +127,9 @@ public:
 
     }
 
+    void loadFromFile();
 
+    void flush();
 
 };
 

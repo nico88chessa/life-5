@@ -27,9 +27,9 @@ using remove_const_ref_t = typename remove_const_ref<T>::type;
 //inline constexpr bool isEnumDescriptable_v = isEnumDescriptable<T>::value;
 
 
-//enum class SettingsGroup; // forward declaration
+//enum class SettingsGroupType; // forward declaration
 //template <typename T>
-//struct isEnumDescriptable<T, std::enable_if_t<std::is_same_v<T, SettingsGroup>> > {
+//struct isEnumDescriptable<T, std::enable_if_t<std::is_same_v<T, SettingsGroupType>> > {
 //    static constexpr bool value = true;
 //};
 

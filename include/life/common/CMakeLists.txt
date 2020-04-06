@@ -1,8 +1,8 @@
 SET(ITEMS
+    QtHelper
     Types
     Traits
     Utils
-    TypesQDecl
         )
 
 FOREACH(ITEM ${ITEMS})
@@ -14,9 +14,9 @@ FOREACH(ITEM ${ITEMS})
         SET(HEADERS ${HEADERS} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.hpp")
     ENDIF()
 
-    IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.ipp")
-        SET(HEADERS ${HEADERS} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.ipp")
-    ENDIF()
+    # IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.ipp")
+    #     SET(HEADERS ${HEADERS} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.ipp")
+    # ENDIF()
 
     IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.qml")
         SET(QML_FILES ${QML_FILES} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.qml")
