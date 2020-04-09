@@ -1,7 +1,7 @@
 SET(ITEMS
     AxisXDescriptor
     AxisZDescriptor
-    Decriptors
+    Descriptors
     )
 
 FOREACH(ITEM ${ITEMS})

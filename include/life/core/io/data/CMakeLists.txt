@@ -1,4 +1,7 @@
 SET(ITEMS
+    AnalogInputValue
+    DigitalInputValue
+    DigitalOutputValue
     )
 
 FOREACH(ITEM ${ITEMS})
@@ -50,7 +53,6 @@ MESSAGE("TS_FILES: ${PROJECT_TS_FILES}")
 MESSAGE("QM_FILES: ${PROJECT_QM_FILES}")
 
 SET(SUB_FOLDERS
-    io
 )
 
 FOREACH(FOLDER ${SUB_FOLDERS})
