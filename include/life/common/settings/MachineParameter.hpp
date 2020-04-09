@@ -5,6 +5,7 @@
 
 #include <variant>
 
+#include <life/common/Enums.hpp>
 #include <life/common/Traits.hpp>
 #include <life/common/Types.hpp>
 

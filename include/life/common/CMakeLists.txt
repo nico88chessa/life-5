@@ -1,8 +1,10 @@
 SET(ITEMS
     QtHelper
     Types
+    Enums
     Traits
     Utils
+    Constants
         )
 
 FOREACH(ITEM ${ITEMS})
@@ -60,6 +62,7 @@ MESSAGE("QM_FILES: ${PROJECT_QM_FILES}")
 SET(SUB_FOLDERS
     logging
     settings
+    data
 )
 
 FOREACH(FOLDER ${SUB_FOLDERS})

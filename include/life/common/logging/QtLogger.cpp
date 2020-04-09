@@ -26,7 +26,7 @@ QtLogger::QtLogger() {
 
     deleteLastLogIfNeeded();
 
-    auto prefixPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).at(0);
+    auto prefixPath = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(0);
     auto logPath = prefixPath + "/" + LOG_PATH + "/";
     QString currentDateTime = QDateTime::currentDateTime().toString(FILE_DATETIME_FORMAT);
     auto filePath = QString(logPath+PROJECT_NAME+"-%1.log").arg(currentDateTime);

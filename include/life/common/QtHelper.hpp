@@ -12,6 +12,7 @@ DV_LIFE_OPEN_NAMESPACE
 enum class DeviceKey;
 enum class MotorXKind;
 enum class AxisXFeedback;
+enum class IOType;
 
 namespace qthelper {
 
@@ -34,5 +35,7 @@ QDataStream& operator>>(QDataStream &in, dv::life::MotorXKind& obj);
 QDataStream& operator<<(QDataStream &out, const dv::life::AxisXFeedback& obj);
 QDataStream& operator>>(QDataStream &in, dv::life::AxisXFeedback& obj);
 
+QDataStream& operator<<(QDataStream &out, const dv::life::IOType& obj);
+QDataStream& operator>>(QDataStream &in, dv::life::IOType& obj);
 
 #endif // QTHELPER_HPP

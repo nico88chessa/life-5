@@ -52,7 +52,6 @@ MESSAGE("QM_FILES: ${PROJECT_QM_FILES}")
 SET(SUB_FOLDERS
     common
     core
-    data
     devices
     gui
 )

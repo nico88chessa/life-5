@@ -6,6 +6,7 @@
 #include <QMetaEnum>
 
 #include <life/common/Types.hpp>
+#include <life/common/Traits.hpp>
 #include <life/common/Utils.hpp>
 
 
@@ -104,5 +105,13 @@ QDataStream& operator<<(QDataStream& out, const AxisXFeedback& obj) {
 }
 
 QDataStream& operator>>(QDataStream& in, AxisXFeedback& obj) {
+    return deserializeEnumWrapper(in, obj);
+}
+
+QDataStream& operator<<(QDataStream& out, const IOType& obj) {
+    return serializeEnumWrapper(out, obj);
+}
+
+QDataStream& operator>>(QDataStream& in, IOType& obj) {
     return deserializeEnumWrapper(in, obj);
 }

@@ -7,6 +7,7 @@
 #include <life/common/settings/descriptors/Descriptors.hpp>
 #include <life/common/settings/MachineParameter.hpp>
 #include <life/common/QtHelper.hpp>
+#include <life/core/io/data/DigitalInputValue.hpp>
 
 #include <life/common/logging/Logger.hpp>
 
@@ -29,7 +30,10 @@ private slots:
     void checkMachineParameterConstexpr_data();
     void checkMachineParameterConstexpr();
 
-    void initializeSettings();
+    void testSettingsManager();
+
+private:
+    void testMachineParameters();
 
 };
 
@@ -39,20 +43,117 @@ class Prova {
 
 };
 
+void SettingsTest::testSettingsManager() {
 
-void SettingsTest::initializeSettings() {
+    using namespace dvlife;
+
+    auto&& settings = SettingsManager::instance();
+    for (int i=0; i<100; ++i) {
+        QString name = QString("PROVA_AN_%1)").arg(i);
+        bool res = settings.addAnalogInput(AnalogInput(
+                                               name, DeviceKey::GALIL_CN, 0,
+                                               false, 1.0, 0.0, "mm", 0, 10, 2));
+        QVERIFY2(res == true,
+                qPrintable(QString("Impossibile inserire l'indice %1").arg(i)));
+    }
+
+    for (int i=0; i<20; ++i) {
+        QString name = QString("PROVA_AN_%1)").arg(i);
+        bool res = settings.removeAnalogInput(AnalogInput(
+                                               name, DeviceKey::GALIL_CN, 0,
+                                               false, 1.0, 0.0, "mm", 0, 10, 2));
+        QVERIFY(res == true);
+    }
+
+    for (int i=0; i<30; ++i) {
+        QString name = QString("PROVA_AN_20%1").arg(i);
+        bool res = settings.addAnalogInput(AnalogInput(
+                                               name, DeviceKey::GALIL_CN, 0,
+                                               false, 1.0, 0.0, "mm", 0, 10, 2));
+        QVERIFY(res == true);
+    }
+
+    for (int i=0; i<100; ++i) {
+        QString name = QString("PROVA_DI_%1").arg(i);
+        bool res = settings.addDigitalInput(DigitalInput(
+                                               name, DeviceKey::GALIL_CN, 0, false,
+                                               false, false, IOType::GENERIC_DIGITAL_INPUT));
+        QVERIFY2(res == true,
+                qPrintable(QString("Impossibile inserire l'indice %1").arg(i)));
+    }
+
+    for (int i=0; i<20; ++i) {
+        QString name = QString("PROVA_DI_%1").arg(i);
+        bool res = settings.removeDigitalInput(DigitalInput(
+                                               name, DeviceKey::GALIL_CN, 0, false,
+                                               false, false, IOType::GENERIC_DIGITAL_INPUT));
+        QVERIFY(res == true);
+    }
+
+    for (int i=0; i<30; ++i) {
+        QString name = QString("PROVA_DI_2_%1").arg(i);
+        bool res = settings.addDigitalInput(DigitalInput(
+                                               name, DeviceKey::GALIL_CN, 0, false,
+                                               false, false, IOType::GENERIC_DIGITAL_INPUT));
+        QVERIFY(res == true);
+    }
+
+    QVERIFY(DigitalInputValue() == DigitalInputValue());
+
+    try {
+
+        settings.setParameter(dvlife::AXIS_Z_STEP_PER_MM, 102);
+        settings.setParameter(dvlife::AXIS_X_TEST, dvlife::AxisXFeedback::MOTOR_RESOLVER);
+        settings.setParameter(dvlife::AXIS_X_TEST, 102);
+    }  catch (dvlife::exceptions::SettingsException& ex) {
+
+        traceErr() << ex.what();
+
+    }
+
+//    settings.setParameter(dvlife::AXIS_X_TEST, 102);
+
+    settings.restore();
+//    res = settings.addAnalogInput(AnalogInput(
+//                                           "PROVA_AN_2", 0, DeviceKey::GALIL_CN,
+//                                           false, 1.0, 0.0, "mm", 0, 10, 2));
+//    QVERIFY(res == true);
+//    res = settings.addAnalogInput(AnalogInput(
+//                                           "PROVA_AN_3", 0, DeviceKey::GALIL_CN,
+//                                           false, 1.0, 0.0, "mm", 0, 10, 2));
+//    QVERIFY(res == true);
+//    res = settings.addAnalogInput(AnalogInput(
+//                                           "PROVA_AN_1", 0, DeviceKey::GALIL_CN,
+//                                           false, 1.0, 0.0, "mm", 0, 10, 2));
+//    QVERIFY(res == false);
+//    res = settings.removeAnalogInput(AnalogInput(
+//                                         "PROVA_AN_1", 0, DeviceKey::GALIL_CN,
+//                                         false, 1.0, 0.0, "mm", 0, 10, 2));
+//    QVERIFY(res == true);
+//    res = settings.removeAnalogInput(AnalogInput(
+//                                         "PROVA_AN_2", 0, DeviceKey::GALIL_CN,
+//                                         false, 1.0, 0.0, "mm", 0, 10, 2));
+//    QVERIFY(res == true);
+//    res = settings.addAnalogInput(AnalogInput(
+//                                           "PROVA_AN_4", 0, DeviceKey::GALIL_CN,
+//                                           false, 1.0, 0.0, "mm", 0, 10, 2));
+//    QVERIFY(res == true);
+
+
+}
+
+void SettingsTest::testMachineParameters() {
 
     using namespace dvlife;
 
     dvlife::qthelper::registerMetatypes();
     dvlife::qthelper::registerMetatypesStreamOperator();
 
-//    auto&& s = SettingsManager::instance();
-    auto temp = dv::life::AXIS_X_DESCR;
+    MAYBE_UNUSED auto temp = dv::life::AXIS_X_DESCR;
 
     QString linear = QVariant::fromValue(dv::life::MotorXKind::LINEAR).toString();
 
-    bool res = testCE1(dvlife::AXIS_X_HOMING_SPEED_MMS);
+    MAYBE_UNUSED bool res = testCE1(dvlife::AXIS_X_HOMING_SPEED_MMS);
 //    constexpr dvlife::MachineParameter t = dvlife::AXIS_X_TEST;
 //    if constexpr (t.hasOption(dvlife::Option::IS_IP_ADDRESS)) {
 
@@ -106,13 +207,13 @@ void SettingsTest::initializeSettings() {
 //    QString test2 = QVariant(dv::life::AxisXFeedback::LINEAR_ENCODER).toString();
 
 //    QVERIFY(test1.compare(test2)==0);
-    auto&& type = QMetaType::type(qPrintable(QString("AxisXFeedback::%1").arg("LINEAR_ENCODER")));
+    MAYBE_UNUSED auto&& type = QMetaType::type(qPrintable(QString("AxisXFeedback::%1").arg("LINEAR_ENCODER")));
 //    QVERIFY(QVariant(dvlife::AxisXFeedback::LINEAR_ENCODER).toString())
-    auto&& provaOpt = dvlife::__AXIS_X_FEEDBACK__OPTIONS__.begin();
-    auto&& provaOpt2 = dvlife::__AXIS_X_STEP_PER_MM__OPTIONS__.begin();
+    MAYBE_UNUSED auto&& provaOpt = dvlife::__AXIS_X_FEEDBACK__OPTIONS__.begin();
+    MAYBE_UNUSED auto&& provaOpt2 = dvlife::__AXIS_X_STEP_PER_MM__OPTIONS__.begin();
     std::initializer_list<dv::life::Option> provaOpt3 = { };
-    auto&& provaOpt4 = provaOpt3.begin();
-    auto&& provaOpt3Size = provaOpt3.size();
+    MAYBE_UNUSED auto&& provaOpt4 = provaOpt3.begin();
+    MAYBE_UNUSED auto&& provaOpt3Size = provaOpt3.size();
     dvlife::SettingsManager::instance();
 
 

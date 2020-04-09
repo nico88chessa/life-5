@@ -1,10 +1,9 @@
 SET(ITEMS
-    MachineParameter
-    SettingsManager
-    SettingsManagerExceptions
-    SettingDescriptor
-    IODescriptor
-    )
+    QtHelper
+    Types
+    Traits
+    Utils
+        )
 
 FOREACH(ITEM ${ITEMS})
     IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.cpp")
@@ -14,6 +13,10 @@ FOREACH(ITEM ${ITEMS})
     IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.hpp")
         SET(HEADERS ${HEADERS} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.hpp")
     ENDIF()
+
+    # IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.ipp")
+    #     SET(HEADERS ${HEADERS} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.ipp")
+    # ENDIF()
 
     IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.qml")
         SET(QML_FILES ${QML_FILES} "${CMAKE_CURRENT_SOURCE_DIR}/${ITEM}.qml")
@@ -55,7 +58,7 @@ MESSAGE("TS_FILES: ${PROJECT_TS_FILES}")
 MESSAGE("QM_FILES: ${PROJECT_QM_FILES}")
 
 SET(SUB_FOLDERS
-    descriptors
+    io
 )
 
 FOREACH(FOLDER ${SUB_FOLDERS})

@@ -72,7 +72,7 @@ std::basic_ostream<CharT, TraitsT>& operator<< (
 
 BoostLogger::BoostLogger() {
 
-    auto prefixPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).at(0);
+    auto prefixPath = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(0);
     auto logPath = prefixPath + "/./" + LOG_PATH +"/";
     auto stdLogPath = logPath.toStdString();
     std::string stdFilename = PROJECT_NAME;

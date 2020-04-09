@@ -11,57 +11,63 @@ DV_LIFE_OPEN_NAMESPACE
 
 namespace exceptions {
 
-class SettingsManagerParameterNotFoundException : public std::exception {
-private:
-    const std::string group;
-    const std::string param;
+class SettingsException : public std::exception {
+protected:
+    std::string description;
 
 public:
-    SettingsManagerParameterNotFoundException(
+    SettingsException() : description("") { }
+
+    virtual const char* what() const noexcept {
+        return description.c_str();
+    }
+
+};
+
+class ParameterNotFoundException : public SettingsException {
+private:
+    std::string group;
+    std::string param;
+
+public:
+    ParameterNotFoundException(
             const std::string& g,
             const std::string& p) :
-        group(g), param(p) { }
+        group(g), param(p) {
+
+        this->description = "Settings parameter " + param + \
+                            + " of group " + group + " not found";
+    }
 
     virtual const char* what() const noexcept {
-        std::string temp = "Settings parameter " + param + \
-                + " of group " + group + " not found";
-        return temp.c_str();
+        return SettingsException::what();
     }
 
 };
 
-class SettingsManagerGroupParameterNotFoundException : public std::exception {
+class GroupParameterNotFoundException : public SettingsException {
 private:
     const std::string group;
 
 public:
-    SettingsManagerGroupParameterNotFoundException(const std::string& s) : group(s) { }
+    GroupParameterNotFoundException(const std::string& s) : group(s) {
+        description = "Settings group " + this->group + " not found";
+    }
 
     virtual const char* what() const noexcept {
-        std::string temp = "Settings group " + this->group + " not found";
-        return temp.c_str();
+        return SettingsException::what();
     }
 
 };
 
-class SettingsManagerTypeMismatchException : public std::exception {
+class TypeMismatchException : public SettingsException {
 public:
-    SettingsManagerTypeMismatchException() { }
-
-    virtual const char* what() const noexcept {
-        std::string temp = "Il tipo di dato non e' coerente con quanto richiesto";
-        return temp.c_str();
+    TypeMismatchException() {
+        description = "Il tipo di dato non e' coerente con quanto richiesto";
     }
 
-};
-
-class DisableMandatoryGroupException : public std::exception {
-public:
-    DisableMandatoryGroupException() { }
-
     virtual const char* what() const noexcept {
-        std::string temp = "Un gruppo obbligatorio non puo' essere disabilitato";
-        return temp.c_str();
+        return SettingsException::what();
     }
 
 };
