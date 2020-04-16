@@ -1,0 +1,61 @@
+MESSAGE("*** DV THEME PLUGIN COMPILATION")
+
+FIND_PACKAGE(Qt5 REQUIRED COMPONENTS Quick Core Qml)
+
+SET(CMAKE_AUTOMOC ON)
+SET(LIBRARY_NAME dvthemecontrols)
+
+QT5_ADD_RESOURCES(PLUGIN_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/resources.qrc)
+
+MESSAGE("CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
+
+SET(ITEMS
+    ${CMAKE_CURRENT_LIST_DIR}/DVThemeControlsPlugin.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/DVThemeControlsPlugin.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DVTheme.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/DVTheme.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ThemeConstants.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ThemeConstants.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/qmldir
+    ${CMAKE_CURRENT_LIST_DIR}/AppBar.qml
+    ${CMAKE_CURRENT_LIST_DIR}/Button.qml
+    )
+
+ADD_LIBRARY(${LIBRARY_NAME} SHARED
+    ${ITEMS})
+
+#TARGET_COMPILE_FEATURES(
+#    dvtheme
+#    PRIVATE
+#        cxx_auto_type
+#        cxx_generic_lambdas
+#)
+
+TARGET_COMPILE_OPTIONS(
+    ${LIBRARY_NAME}
+    PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+    )
+
+TARGET_LINK_LIBRARIES(
+    ${LIBRARY_NAME}
+    PRIVATE
+    Qt5::Core
+    Qt5::Quick
+    Qt5::Qml
+)
+
+ADD_CUSTOM_COMMAND(
+    TARGET ${LIBRARY_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/qmldir $<TARGET_FILE_DIR:dvthemecontrols>/qmldir
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/AppBar.qml $<TARGET_FILE_DIR:dvthemecontrols>/AppBar.qml
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/Button.qml $<TARGET_FILE_DIR:dvthemecontrols>/Button.qml
+)
+
+
+
+
+MESSAGE("*** END DV THEME PLUGIN COMPILATION")

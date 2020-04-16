@@ -1,0 +1,8 @@
+module dv.theme.controls
+
+AppBar 1.0 AppBar.qml
+Button 1.0 Button.qml
+
+classname DVThemeControlsPlugin
+
+plugin dvthemecontrols

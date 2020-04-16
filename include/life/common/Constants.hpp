@@ -44,6 +44,13 @@ static constexpr int ANALOG_OUTPUT_MASK = 0x03 << 8;    // 768 (max 256 output a
 static constexpr analogReal ANALAG_GAIN_DEFAULT = 1.0;
 static constexpr analogReal ANALAG_HYSTERESIS_DEFAULT = 1.0;
 
+
+// questa sezione di costanti riguarda qml (valutare se creare un altro file..)
+namespace qml {
+
+// niente per ora
+}
+
 DV_LIFE_CLOSE_NAMESPACE
 
 #endif // CONSTANTS_HPP

@@ -1,4 +1,7 @@
 SET(ITEMS
+    QmlHelper
+    FactoryQml
+    QmlBaseController
     )
 
 FOREACH(ITEM ${ITEMS})
@@ -50,9 +53,10 @@ MESSAGE("TS_FILES: ${PROJECT_TS_FILES}")
 MESSAGE("QM_FILES: ${PROJECT_QM_FILES}")
 
 SET(SUB_FOLDERS
-    logic
-    resources
+    controllers
+    data
 )
+
 
 FOREACH(FOLDER ${SUB_FOLDERS})
     # INCLUDE_DIRECTORIES(${FOLDER})

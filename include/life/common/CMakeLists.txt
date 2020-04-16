@@ -3,6 +3,7 @@ SET(ITEMS
     Types
     Enums
     Traits
+    MacroUtils
     Utils
     Constants
         )

@@ -46,9 +46,9 @@ void IOTest::testEnum_data() {
     QTest::newRow("POWER_SCAN") << dvlife::IOType::POWER_SCAN << 260;
     QTest::newRow("START_SCAN") << dvlife::IOType::START_SCAN << 261;
     QTest::newRow("STOP_SCAN") << dvlife::IOType::STOP_SCAN << 262;
-    QTest::newRow("YELLOW_LIGHT") << dvlife::IOType::YELLOW_LIGHT << 263;
-    QTest::newRow("RED_LIGHT") << dvlife::IOType::RED_LIGHT << 264;
-    QTest::newRow("GREEN_LIGHT") << dvlife::IOType::GREEN_LIGHT << 265;
+    QTest::newRow("GREEN_LIGHT") << dvlife::IOType::GREEN_LIGHT << 263;
+    QTest::newRow("YELLOW_LIGHT") << dvlife::IOType::YELLOW_LIGHT << 264;
+    QTest::newRow("RED_LIGHT") << dvlife::IOType::RED_LIGHT << 265;
     QTest::newRow("GENERIC_ANALOG_INPUT") << dvlife::IOType::GENERIC_ANALOG_INPUT << 512;
 
 }

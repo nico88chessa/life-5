@@ -5,6 +5,7 @@
 #include <QByteArray>
 #include <QMetaEnum>
 
+#include <life/common/logging/Logger.hpp>
 #include <life/common/Types.hpp>
 #include <life/common/Traits.hpp>
 #include <life/common/Utils.hpp>
@@ -20,12 +21,18 @@ void qthelper::registerMetatypes() {
         return;
     called = true;
 
-    qRegisterMetaType<dv::life::DeviceKey>("dv::life::DeviceKey");
-    qRegisterMetaType<DeviceKey>("DeviceKey");
-    qRegisterMetaType<dv::life::MotorXKind>("dv::life::MotorXKind");
-    qRegisterMetaType<MotorXKind>("MotorXKind");
-    qRegisterMetaType<dv::life::AxisXFeedback>("dv::life::AxisXFeedback");
-    qRegisterMetaType<AxisXFeedback>("AxisXFeedback");
+    int qmlTypeId = qRegisterMetaType<dv::life::DeviceKey>("dv::life::DeviceKey");
+    traceDebug() << "dv::life::DeviceKey QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<DeviceKey>("DeviceKey");
+    traceDebug() << "DeviceKey QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<dv::life::MotorXKind>("dv::life::MotorXKind");
+    traceDebug() << "dv::life::MotorXKind QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<MotorXKind>("MotorXKind");
+    traceDebug() << "MotorXKind QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<dv::life::AxisXFeedback>("dv::life::AxisXFeedback");
+    traceDebug() << "dv::life::AxisXFeedback QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<AxisXFeedback>("AxisXFeedback");
+    traceDebug() << "AxisXFeedback QML TypeId: " << qmlTypeId;
 
 }
 
