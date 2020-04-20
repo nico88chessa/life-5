@@ -1,7 +1,16 @@
 # LIFE-5
 ========
 
-## Step per la compilazione del plugin
+## Plugin `dv.theme.controls`
+
+Il plugin contiene tutte le informazioni relative al theme dell'applicazione, quindi colori, oggetti qml, script js.
+
+Per la gestione del plugin, ricordarsi di:
+
+1. file `qmldir`: questo file deve contenere la descrizione degli oggetti QML
+2. i file `.qml`, una volta che il plugin viene compilato, devono essere copiati all'interno della cartella della build (script automatizzato all'interno di CMakeLists.txt)
+
+### Step per la compilazione del plugin
 
 1. Aprire il progetto con QtCretor selezionando il CMakeLists.txt principale; successivamente, compilare solo il plugin
 2. In questo esempio, si ha compilato il plugin al percorso: `~/workspace/cpp/life-5/Debug/`
@@ -13,7 +22,7 @@
 > Nota: il file `plugins.qmltypes` va all'interno della cartella della build, non della cartella sorgente.
 
 
-### NOTE
+#### NOTE
 
 * *Fare molta attenzione ai percorsi.*  
 Esempio: in questo caso si ha:
@@ -44,4 +53,4 @@ Oltre alla compilazione del progetto normale, e' stata aggiunta una *Custom Proc
 
 Per velocizzare la compilazione, nello step della Build e' stato aggiunto il parametro `-j8`, che indica quanti thread usare per la compilazione.
 
-<img src="./doc/debug-setup.png" width="20px" height="40px" />
+<img src="./doc/debug-setup.png" />

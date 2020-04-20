@@ -5,17 +5,15 @@
 
 #include <QScopedPointer>
 
-#include <life/gui/logic/QmlBaseController.hpp>
+#include <life/gui/logic/BaseController.hpp>
 #include <life/gui/logic/data/MainWindowData.hpp>
 
 
 DV_LIFE_OPEN_NAMESPACE
 
-class MainWindowCtrl : public QmlBaseController {
+class MainWindowCtrl : public BaseController {
     Q_OBJECT
-
     Q_PROPERTY(MainWindowData* pData READ getData CONSTANT FINAL)
-
 
 public:
     DV_DECL_POINTER_ALIAS(MainWindowCtrl)

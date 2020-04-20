@@ -9,6 +9,16 @@ QT5_ADD_RESOURCES(PLUGIN_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/resources.qrc)
 
 MESSAGE("CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
 
+SET(QML_ITEMS
+    ${CMAKE_CURRENT_LIST_DIR}/AppBar.qml
+    ${CMAKE_CURRENT_LIST_DIR}/AppMenuButton.qml
+    ${CMAKE_CURRENT_LIST_DIR}/Button.qml
+    ${CMAKE_CURRENT_LIST_DIR}/FloatingButton.qml
+    ${CMAKE_CURRENT_LIST_DIR}/FloatingButtonMini.qml
+    ${CMAKE_CURRENT_LIST_DIR}/SingleLineList.qml
+    ${CMAKE_CURRENT_LIST_DIR}/TextField.qml
+    )
+
 SET(ITEMS
     ${CMAKE_CURRENT_LIST_DIR}/DVThemeControlsPlugin.hpp
     ${CMAKE_CURRENT_LIST_DIR}/DVThemeControlsPlugin.cpp
@@ -17,8 +27,7 @@ SET(ITEMS
     ${CMAKE_CURRENT_LIST_DIR}/ThemeConstants.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ThemeConstants.hpp
     ${CMAKE_CURRENT_LIST_DIR}/qmldir
-    ${CMAKE_CURRENT_LIST_DIR}/AppBar.qml
-    ${CMAKE_CURRENT_LIST_DIR}/Button.qml
+    ${QML_ITEMS}
     )
 
 ADD_LIBRARY(${LIBRARY_NAME} SHARED
@@ -51,10 +60,18 @@ ADD_CUSTOM_COMMAND(
     TARGET ${LIBRARY_NAME}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/qmldir $<TARGET_FILE_DIR:dvthemecontrols>/qmldir
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/AppBar.qml $<TARGET_FILE_DIR:dvthemecontrols>/AppBar.qml
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/Button.qml $<TARGET_FILE_DIR:dvthemecontrols>/Button.qml
 )
 
+FOREACH(ITEM ${QML_ITEMS})
+
+    GET_FILENAME_COMPONENT(FILENAME ${ITEM} NAME)
+    MESSAGE("FILENAME: ${FILENAME}")
+    ADD_CUSTOM_COMMAND(
+        TARGET ${LIBRARY_NAME}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${ITEM} $<TARGET_FILE_DIR:dvthemecontrols>/${FILENAME}
+    )
+ENDFOREACH()
 
 
 

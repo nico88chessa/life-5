@@ -1,5 +1,7 @@
 SET(ITEMS
     MainWindowCtrl
+    SettingsCtrlPrivate
+    SettingsCtrl
     )
 
 FOREACH(ITEM ${ITEMS})

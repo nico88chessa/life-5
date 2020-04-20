@@ -1,5 +1,6 @@
 SET(ITEMS
     MainWindowData
+    SettingsData
     )
 
 FOREACH(ITEM ${ITEMS})

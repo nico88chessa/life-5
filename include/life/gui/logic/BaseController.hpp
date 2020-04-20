@@ -1,5 +1,5 @@
-#ifndef QMLBASECONTROLLER_HPP
-#define QMLBASECONTROLLER_HPP
+#ifndef BASECONTROLLER_HPP
+#define BASECONTROLLER_HPP
 
 #include <configure.h>
 
@@ -11,11 +11,11 @@
 
 DV_LIFE_OPEN_NAMESPACE
 
-class QmlBaseController : public QObject {
+class BaseController : public QObject {
     Q_OBJECT
 
 public:
-    DV_DECL_POINTER_ALIAS(QmlBaseController)
+    DV_DECL_POINTER_ALIAS(BaseController)
 
 protected:
     /* NOTE NIC 09/04/2020: QQmlEngine, QJSEngine
@@ -27,18 +27,18 @@ protected:
 
 
 public:
-    explicit QmlBaseController(QObject* parent = nullptr) :
-        QmlBaseController(nullptr, nullptr, parent) { }
+    explicit BaseController(QObject* parent = nullptr) :
+        BaseController(nullptr, nullptr, parent) { }
 
-    explicit QmlBaseController(QQmlEngine* qmlEngine,
+    explicit BaseController(QQmlEngine* qmlEngine,
                      QJSEngine* jsEngine,
                      QObject* parent = nullptr) :
         QObject(parent), qmlEngine(qmlEngine), jsEngine(jsEngine) { }
 
-    virtual ~QmlBaseController() { }
+    virtual ~BaseController() { }
 
 };
 
 DV_LIFE_CLOSE_NAMESPACE
 
-#endif // QMLBASECONTROLLER_HPP
+#endif // BASECONTROLLER_HPP

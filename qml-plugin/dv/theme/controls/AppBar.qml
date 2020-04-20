@@ -12,11 +12,14 @@ Control {
     property Component leftItem
     property list<Component> rightItems
 
-    readonly property int maxRightItems: 1
-    readonly property int rightItemsSpace: 24
+    QtObject {
+        id: innerObj
+        readonly property int maxRightItems: 3
+        readonly property int rightItemsSpace: 0
 
-    property list<Component> instancedItems;
-    property int instancedWidth : 0
+        property list<Component> instancedItems;
+        property int instancedWidth : 0
+    }
 
     width: parent ? parent.width : 1000
     height: 56
@@ -24,7 +27,9 @@ Control {
     topInset: 0
     leftInset: 0
     rightInset: 0
-    padding: 16
+//    padding: 16
+    horizontalPadding: 12
+    verticalPadding: 4
     background: Rectangle {
         id: appBarRect
         width: parent.implicitContentWidth
@@ -34,31 +39,33 @@ Control {
     }
 
     Component.onCompleted: {
-        instancedWidth = appBar.width
-        appBar.statusReady = true
+        innerObj.instancedWidth = appBar.width
     }
 
     onWidthChanged: {
 
-        for (var i=0; i<instancedItems.length; i++) {
-            instancedItems[i].x = instancedItems[i].x + (appBar.width - appBar.instancedWidth)
+        var instancedItemsSize = innerObj.instancedItems.length
+        for (var i=0; i<instancedItemsSize; i++) {
+            var item = innerObj.instancedItems[i]
+            item.x = item.x + (appBar.width - innerObj.instancedWidth)
         }
-        appBar.instancedWidth = appBar.width
+        innerObj.instancedWidth = appBar.width
 
     }
-
 
     contentItem: Item {
 
         id: contentItem
         width: appBar.implicitContentWidth
         height: appBar.implicitContentHeight
+        anchors.verticalCenter: appBar.verticalCenter
 
         Text {
             id: appBarTitle
-            color: ThemeConstants.fontColor
+            color: ThemeConstants.foregroundOnPrimary
             text: appBar.title
             x: 56
+            anchors.verticalCenter: parent.verticalCenter
             font {
                 pixelSize: 20
                 family: "Roboto"
@@ -71,22 +78,23 @@ Control {
             if (leftItem)
                 leftItem.createObject(contentItem, {x:0, y:0})
 
-            var iterations = Math.min(maxRightItems, appBar.rightItems.length)
+            var iterations = Math.min(innerObj.maxRightItems, appBar.rightItems.length)
 //            console.info("Iter: "+iterations)
             var rightPosition = appBar.availableWidth
 
             for (var i=0; i<iterations; i++) {
 
-                //                console.info("rPos: "+appBar.width-rightItems[i].width-20*i)
+//                console.info("rPos: "+appBar.width-rightItems[i].width-20*i)
 
-                var rItem = appBar.rightItems[i].createObject(contentItem, {id: "ciao"})//, {x:appBar.width-rightItems[i].width-20*i, y:0})
+                var rItem = appBar.rightItems[i].createObject(contentItem)//, {x:appBar.width-rightItems[i].width-20*i, y:0})
 //                console.info("appBar.width: "+appBar.availableWidth)
 //                console.info("rItem.width: "+rItem.width)
-                //                rItem.id = "rightButton" + i
-                rItem.x = rightPosition - rItem.width - rightItemsSpace*i
-                rItem.y = 0
+//                rItem.id = "rightButton" + i
+                rItem.x = rightPosition - rItem.width - innerObj.rightItemsSpace*i
+//                rItem.y = 0
+                rItem.anchors.verticalCenter = contentItem.verticalCenter
                 rightPosition = rItem.x
-                instancedItems.push(rItem)
+                innerObj.instancedItems.push(rItem)
 
             }
         }

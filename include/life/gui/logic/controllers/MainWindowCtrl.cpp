@@ -16,7 +16,7 @@ MainWindowCtrl::MainWindowCtrl(QObject *parent) :
 
 MainWindowCtrl::MainWindowCtrl(MAYBE_UNUSED QQmlEngine* qmlEngine, MAYBE_UNUSED QJSEngine* jsEngine,
                      QObject* parent) :
-    QmlBaseController(qmlEngine, jsEngine, parent),
+    BaseController(qmlEngine, jsEngine, parent),
     data(new MainWindowData()) {
 
     traceEnter;

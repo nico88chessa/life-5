@@ -15,5 +15,6 @@
         <file>qml/MainWindow.qml</file>
         <file>icons/menu-black-18dp.svg</file>
         <file>icons/settings-24px.svg</file>
+        <file>qml/SettingsDialog.qml</file>
     </qresource>
 </RCC>

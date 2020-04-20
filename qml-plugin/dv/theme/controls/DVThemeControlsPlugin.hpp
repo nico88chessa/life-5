@@ -13,7 +13,7 @@ class DVThemeControlsPlugin : public QQmlExtensionPlugin {
 public:
     DVThemeControlsPlugin();
 
-    void registerTypes(const char* uri);
+    virtual void registerTypes(const char* uri) override;
 
 };
 

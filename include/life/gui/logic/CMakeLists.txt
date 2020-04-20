@@ -1,7 +1,7 @@
 SET(ITEMS
     QmlHelper
     FactoryQml
-    QmlBaseController
+    BaseController
     )
 
 FOREACH(ITEM ${ITEMS})

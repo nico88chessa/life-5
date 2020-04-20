@@ -13,7 +13,9 @@
 #include <life/common/Constants.hpp>
 #include <life/gui/logic/FactoryQml.hpp>
 #include <life/gui/logic/controllers/MainWindowCtrl.hpp>
+#include <life/gui/logic/controllers/SettingsCtrl.hpp>
 #include <life/gui/logic/data/MainWindowData.hpp>
+#include <life/gui/logic/data/SettingsData.hpp>
 
 
 DV_LIFE_OPEN_NAMESPACE
@@ -29,17 +31,19 @@ void registerQmlSingletons() {
 
     traceEnter;
 
-    int qmlTypeId = qmlRegisterSingletonType<MainWindowCtrl>(DV_QML_URI_CONTROLLERS, 1, 0, "MainwindowCtrl",
+    int qmlTypeId;
+
+    qmlTypeId = qmlRegisterSingletonType<MainWindowCtrl>(DV_QML_URI_CONTROLLERS, 1, 0, "MainwindowCtrl",
                                                                [](QQmlEngine* qmlEngine, QJSEngine* jsEngine) -> QObject* {
                 return FactoryQml::instance().getInstance<MainWindowCtrl>(qmlEngine, jsEngine); }
                 );
     traceDebug() << "MainWindowCtrl QML TypeId: " << qmlTypeId;
 
-//    qmlTypeId = qmlRegisterSingletonType<ThemeConstants>(DV_QML_URI_THEME, 1, 0, "ThemeConstants",
-//                                                               [](QQmlEngine* qmlEngine, QJSEngine* jsEngine) -> QObject* {
-//                return FactoryQml::instance().getInstance<ThemeConstants>(qmlEngine, jsEngine); }
-//                );
-//    traceDebug() << "ThemeConstants QML TypeId: " << qmlTypeId;
+    qmlTypeId = qmlRegisterSingletonType<SettingsCtrl>(DV_QML_URI_CONTROLLERS, 1, 0, "SettingsCtrl",
+                                                               [](QQmlEngine* qmlEngine, QJSEngine* jsEngine) -> QObject* {
+                return FactoryQml::instance().getInstance<SettingsCtrl>(qmlEngine, jsEngine); }
+                );
+    traceDebug() << "SettingsCtrl QML TypeId: " << qmlTypeId;
 
     traceExit;
 
@@ -62,12 +66,18 @@ void registerQmlAnonymousTypes() {
      * vedere con le Qt 5.15 se va bene sta cosa
      */
 
+    int qmlTypeId;
+
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    int qmlTypeId = qmlRegisterType<dvlife::MainWindowData>();
+    qmlTypeId = qmlRegisterType<dvlife::MainWindowData>();
     traceDebug() << "MainWindowData QML TypeId: " << qmlTypeId;
+    qmlTypeId = qmlRegisterType<dvlife::SettingsData>();
+    traceDebug() << "SettingsData QML TypeId: " << qmlTypeId;
 #else
-    int qmlTypeId = qmlRegisterAnonymousType<dvlife::MainwindowData>(dvlife::DV_LIFE_QML_DATA_NAMESPACE, 1, 0);
+    qmlTypeId = qmlRegisterAnonymousType<dvlife::MainwindowData>(dvlife::DV_LIFE_QML_DATA_NAMESPACE, 1, 0);
     traceDebug() << "MainwindowData QML TypeId: " << qmlTypeId;
+    qmlTypeId = qmlRegisterAnonymousType<dvlife::SettingsData>(dvlife::DV_LIFE_QML_DATA_NAMESPACE, 1, 0);
+    traceDebug() << "SettingsData QML TypeId: " << qmlTypeId;
 #endif
 
     traceExit;

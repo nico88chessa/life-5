@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.impl 2.12
 import QtQuick.Templates 2.12 as T
 
+import QtGraphicalEffects 1.12
 import dv.theme.controls 1.0
 
 
@@ -14,37 +15,30 @@ T.Button {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    horizontalPadding: 16
+    horizontalPadding: 16;
     verticalPadding: 0
 
-    height: 36
-
-    bottomInset: 0
-    topInset: 0
-    leftInset: 0
-    rightInset: 0
+    height: 56
+    width: 56
 
     icon.width: 24
     icon.height: 24
-    icon.color: control.checked || control.highlighted ? control.palette.brightText :
-                control.flat && !control.down ? (control.visualFocus ? control.palette.highlight : control.palette.windowText) : control.palette.buttonText
 
-    font {
-        family: ThemeConstants.font
-        pointSize: 14
-        weight: Font.DemiBold
-    }
-
-    contentItem: IconLabel {
-        spacing: control.spacing
-        mirrored: control.mirrored
-        display: control.display
-
-        icon: control.icon
-        text: control.text
-        font: control.font
-        color: control.enabled ? ThemeConstants.foregroundOnPrimary : ThemeConstants.inactive
-        opacity: 1
+    contentItem: Item {
+        width: icon.width
+        height: icon.height
+        Image {
+            id: image
+            source: icon.source
+            sourceSize.width: 24
+            sourceSize.height: 24
+            anchors.centerIn: parent
+            ColorOverlay {
+                anchors.fill: parent
+                source: parent
+                color: ThemeConstants.foregroundOnPrimary
+            }
+        }
     }
 
     background: Item {
@@ -56,7 +50,7 @@ T.Button {
             color: control.enabled ? ThemeConstants.primary : ThemeConstants.disabled
             opacity: 1
             visible: true
-            radius: 4
+            radius: control.width / 2
 
             Rectangle {
                 id: rectHover
@@ -64,7 +58,7 @@ T.Button {
                 color: ThemeConstants.overlayDark
                 opacity: 0.08
                 visible: false
-                radius: 4
+                radius: control.width / 2
             }
 
             Rectangle {
@@ -73,7 +67,7 @@ T.Button {
                 color: ThemeConstants.overlayDark
                 opacity: 0.24
                 visible: false
-                radius: 4
+                radius: control.width / 2
             }
 
             Rectangle {
@@ -82,7 +76,7 @@ T.Button {
                 color: ThemeConstants.overlayDark
                 opacity: 0.08
                 visible: false
-                radius: 4
+                radius: control.width / 2
             }
 
             Rectangle {
@@ -91,7 +85,7 @@ T.Button {
                 color: ThemeConstants.overlayDark
                 opacity: 0.12
                 visible: false
-                radius: 4
+                radius: control.width / 2
             }
         }
 
