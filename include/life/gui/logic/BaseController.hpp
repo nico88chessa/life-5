@@ -14,7 +14,6 @@ DV_LIFE_OPEN_NAMESPACE
 class BaseController : public QObject {
     Q_OBJECT
 
-public:
     DV_DECL_POINTER_ALIAS(BaseController)
 
 protected:

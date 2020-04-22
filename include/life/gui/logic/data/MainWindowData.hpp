@@ -16,8 +16,6 @@ class MainWindowData : public QObject {
 
     Q_PROPERTY(QString pApplicationName READ getApplicationName CONSTANT)
 
-
-public:
     DV_DECL_POINTER_ALIAS(MainWindowData)
 
 private:

@@ -15,10 +15,9 @@ class MainWindowCtrl : public BaseController {
     Q_OBJECT
     Q_PROPERTY(MainWindowData* pData READ getData CONSTANT FINAL)
 
-public:
     DV_DECL_POINTER_ALIAS(MainWindowCtrl)
 
-    private:
+private:
     QScopedPointer<MainWindowData> data;
     int test;
 

@@ -24,7 +24,7 @@ ApplicationWindow {
     }
 
 //    Image {
-//        source: "qrc:///icons/menu-black-18dp.svg"
+//        source: "qrc:///icons/menu-24px.svg"
 //        x: 100
 //        y: 100
 //        sourceSize.width: 100
@@ -73,7 +73,7 @@ ApplicationWindow {
         leftItem: Component {
             id: menuButton
             AppMenuButton {
-                icon.source: "qrc:/icons/menu-black-18dp.svg"
+                icon.source: "qrc:/icons/menu-24px.svg"
                 icon.width: 24
                 icon.height: 24
             }
@@ -83,7 +83,7 @@ ApplicationWindow {
             id: menuButton
             Image {
                 id: menuImage
-                source: "qrc:/icons/menu-black-18dp.svg"
+                source: "qrc:/icons/menu-24px.svg"
                 sourceSize.width: 48
                 sourceSize.height: 48
                 ColorOverlay {

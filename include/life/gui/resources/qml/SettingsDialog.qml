@@ -1,9 +1,14 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-//import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.12
+
+//import "./settingsDialogParts" OK
+import "qrc:/qml/settingsDialogPages"
+
 
 import dv.life.controllers 1.0
 import dv.theme.controls 1.0
+
 
 Dialog {
 
@@ -22,23 +27,15 @@ Dialog {
         border.width: 0
     }
 
-//    Rectangle {
-//        id: rr
-//        width: 50; height: 50; visible: true
-//        x:200
-//        y:200
-//        color: "#FF00F6"
-//        opacity: 1
-//    }
-
     Item {
+        id: iMainMenu
         clip: true
         anchors.left: parent.leftPadding
         height: parent.height
         width: 244
 
         Rectangle {
-            id: rMenulist
+            id: rMainMenu
             color: ThemeConstants.background
             anchors {
                 fill: parent
@@ -54,7 +51,7 @@ Dialog {
         }
 
         Component {
-            id: singleLine
+            id: cMenuItem
 
             SingleLineList {
                 /* NOTA: il parent di questo e' ContentItem, non la listView (vedere sotto ListView)
@@ -66,10 +63,11 @@ Dialog {
                   MouseArea della ListView e' fratello di ContentItem, non del delegate
                   */
                 z:1
-                width: rMenulist.width
+                width: rMainMenu.width
                 labelFont: ThemeConstants.font
-                label: mLabel
-                image: mImage
+                label: itemLabel
+                image: itemImage
+//                enabled: itemIsEnabled
                 isActive: ListView.view.indexActive === index
 
             }
@@ -77,7 +75,7 @@ Dialog {
 
         ListView {
 
-            id: testListview
+            id: lvMainMenu
 
             property int indexActive//: -1
 
@@ -91,48 +89,70 @@ Dialog {
             // passa sotto al content Item
             contentItem.z: 1
 
-            model: SettingsCtrl.data.menuModel
+            model: SettingsDialogCtrl.menuModel
             /* Lascio perche' non si sa mai
               delegate: SingleLineList {
-                  width: rMenulist.width
+                  width: rMainMenu.width
                   labelFont: "Roboto"
                   label: mLabel
                   image: mImage
                   focus: ListView.isCurrentItem
-                  isActive: index == testListview.indexActive
+                  isActive: index == lvMainMenu.indexActive
                   onActivated: {
-                      testListview.indexActive = index;
-                      testListview.currentIndex = index;
+                      lvMainMenu.indexActive = index;
+                      lvMainMenu.currentIndex = index;
                       rr.x = rr.x + ((index % 2 == 0) ? 1 : -1) * 10 * index
                   }
               }
               */
 
             MouseArea {
-                id: testMouseArea
+                id: maMenu
                 // z: -1 non serve perche' ho impostato contentItem.z=0
                 hoverEnabled: true
                 anchors.fill: parent
                 propagateComposedEvents: false
                 onClicked: {
-                    var indexActive = testListview.indexAt(mouse.x, mouse.y)
-                    testListview.currentIndex = indexActive
-                    testListview.indexActive = indexActive
+                    var indexActive = lvMainMenu.indexAt(mouse.x, mouse.y)
+                    lvMainMenu.currentIndex = indexActive
+                    lvMainMenu.indexActive = indexActive
                 }
             }
 
-            delegate: singleLine
+            delegate: cMenuItem
 
             Keys.onPressed: {
                 switch (event.key) {
                 case Qt.Key_Enter:
                 case Qt.Key_Space:
-                case Qt.Key_Return: testListview.indexActive = testListview.currentIndex;
+                case Qt.Key_Return: lvMainMenu.indexActive = lvMainMenu.currentIndex;
                 }
             }
 
         }
 
+    }
+
+
+    StackLayout {
+        id: slStack
+
+        anchors.left: iMainMenu.right
+        anchors.top: settingsDialog.contentItem.top
+        anchors.bottom: settingsDialog.contentItem.bottom
+        anchors.right: settingsDialog.contentItem.right
+
+        currentIndex: lvMainMenu.indexActive
+
+        FileSettingsPage {
+
+        }
+        Rectangle {
+            color: 'teal'
+        }
+        Rectangle {
+            color: 'plum'
+        }
     }
 
 }

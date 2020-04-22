@@ -13,8 +13,13 @@
         <file>fonts/Roboto-Thin.ttf</file>
         <file>fonts/Roboto-ThinItalic.ttf</file>
         <file>qml/MainWindow.qml</file>
-        <file>icons/menu-black-18dp.svg</file>
         <file>icons/settings-24px.svg</file>
         <file>qml/SettingsDialog.qml</file>
+        <file>icons/devices_other-24px.svg</file>
+        <file>icons/calendar_today-24px.svg</file>
+        <file>icons/menu-24px.svg</file>
+        <file>icons/translate-24px.svg</file>
+        <file>qml/settingsDialogPages/FileSettingsPage.qml</file>
+        <file>icons/router-24px.svg</file>
     </qresource>
 </RCC>

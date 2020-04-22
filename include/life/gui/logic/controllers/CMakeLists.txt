@@ -1,7 +1,7 @@
 SET(ITEMS
     MainWindowCtrl
-    SettingsCtrlPrivate
-    SettingsCtrl
+    SettingsDialogCtrlP
+    SettingsDialogCtrl
     )
 
 FOREACH(ITEM ${ITEMS})

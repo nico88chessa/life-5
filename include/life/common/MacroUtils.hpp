@@ -8,6 +8,7 @@ DV_LIFE_OPEN_NAMESPACE
 
 #ifndef DV_DECL_POINTER_ALIAS
 #define DV_DECL_POINTER_ALIAS(Class) \
+public: \
     using Ptr = Class*; \
     using ConstPtr = const Class*;
 #endif

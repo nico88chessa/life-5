@@ -22,21 +22,26 @@ int main(MAYBE_UNUSED int argc, MAYBE_UNUSED char** argv) {
     qthelper::registerMetatypes();
     qthelper::registerMetatypesStreamOperator();
 
-    qthelper::registerQmlType();
-    qthelper::registerQmlSingletons();
-    qthelper::registerQmlAnonymousTypes();
-    qthelper::registerQmlUncreatableType();
+    qmlhelper::registerQmlTypes();
+    qmlhelper::registerQmlSingletons();
+    qmlhelper::registerQmlAnonymousTypes();
+    qmlhelper::registerQmlUncreatableTypes();
+    qmlhelper::registerMetaTypes();
 
     QGuiApplication app(argc, argv);
     app.setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    qthelper::addCustomFonts();
+    qmlhelper::addCustomFonts();
     auto fam = QFontDatabase().families();
 
     QQmlApplicationEngine engine;
     auto currentList = engine.importPathList();
 
     engine.addImportPath("./qml-plugin/");
+//    engine.addImportPath("qrc:/qml/");
+//    engine.addImportPath(":/qml/");
+//    engine.addImportPath("qrc:/qml/settingsDialogParts/");
+//    engine.addImportPath(":/qml/settingsDialogParts/");
     currentList = engine.importPathList();
     engine.load(QUrl(QStringLiteral("qrc:/qml/MainWindow.qml")));
 
