@@ -19,7 +19,7 @@ Control {
     readonly property int widthDefault: 244
 
     padding: paddingDefault
-    height: heightDefault
+    height: visible ? heightDefault : 0
     width: widthDefault
 
     QtObject {

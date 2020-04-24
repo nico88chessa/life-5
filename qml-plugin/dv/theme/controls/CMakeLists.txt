@@ -17,6 +17,7 @@ SET(QML_ITEMS
     ${CMAKE_CURRENT_LIST_DIR}/FloatingButtonMini.qml
     ${CMAKE_CURRENT_LIST_DIR}/SingleLineList.qml
     ${CMAKE_CURRENT_LIST_DIR}/TextField.qml
+    ${CMAKE_CURRENT_LIST_DIR}/List.qml
     )
 
 SET(ITEMS

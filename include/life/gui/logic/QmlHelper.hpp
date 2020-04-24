@@ -111,6 +111,10 @@ void registerMetaTypes() {
     // vedere link forum qml: https://forum.qt.io/topic/113897/qml-c-exposing-pointer-type-attribute-to-qml
     qmlTypeId = qRegisterMetaType<dv::life::MenuModel*>("MenuModel*");
     traceDebug() << "MenuModel* QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<dv::life::SettingsGroupModel*>("SettingsGroupModel*");
+    traceDebug() << "SettingsGroupModel* QML TypeId: " << qmlTypeId;
+    qmlTypeId = qRegisterMetaType<dv::life::SettingsGroupParametersModel*>("SettingsGroupParametersModel*");
+    traceDebug() << "SettingsGroupParametersModel* QML TypeId: " << qmlTypeId;
 
     traceExit;
 }

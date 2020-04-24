@@ -7,6 +7,7 @@ FloatingButton 1.0 FloatingButton.qml
 FloatingButtonMini 1.0 FloatingButtonMini.qml
 SingleLineList 1.0 SingleLineList.qml
 TextField 1.0 TextField.qml
+List 1.0 List.qml
 
 classname DVThemeControlsPlugin
 
